@@ -1,0 +1,16 @@
+#root {
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+}
+#play{
+  overflow-x: scroll;
+  overflow-y: scroll;
+  flex: none;
+}
+
+.slider.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
+}
