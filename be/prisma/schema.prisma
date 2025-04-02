@@ -12,3 +12,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+
+model Images {
+  id         Int    @id @default(autoincrement()) 
+  url        String
+  leaderBoard LeaderBoard[]
+  cordinates Cordinates[]
+}
+
+model LeaderBoard {
+  id         Int    @id @default(autoincrement())
+  date       DateTime @default(now())    
+  userName   String
+  time       String
+  Images     Images     @relation(fields: [imageId], references: [id])
+  imageId    Int
+}
+
+model Cordinates {
+  id         Int    @id @default(autoincrement()) 
+  url        String
+  cordTopY      Int
+  cordBotY      Int
+  cordLeftX    Int
+  cordRightX   Int
+  Images     Images     @relation(fields: [imageId], references: [id])
+  imageId    Int
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String // MediumText may be needed for MySql
+  expiresAt DateTime
+}
