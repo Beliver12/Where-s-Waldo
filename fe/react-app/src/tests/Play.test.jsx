@@ -5,6 +5,7 @@ import {Start} from "../routes/StartGame";
 import {StopWatch} from "../routes/StopWatch";
 
 
+
 describe("DisplayImages", async () => {
   it("should display images when isCliked is true, positionX and positionY is provided", async () => {
     render(<DisplayImages isClicked={true} positionX={123} positionY={544} />);

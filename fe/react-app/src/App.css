@@ -8,11 +8,17 @@
   overflow-x: scroll;
   overflow-y: scroll;
   flex: none;
-  padding: 0;
+  padding: 0px;
 }
 
 .main-image {
   width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .main-image {
+  width: 1000px;
+  }
 }
 
 .slider.active {
@@ -60,14 +66,13 @@
   img {
     width: 200px;
     height: 200px;
+   
   }
-  img:focus {
-    border: 1px solid yellow;
-  }
+
+ 
+
 }
-img:focus {
-  border: 1px solid yellow;
-}
+
 
 h2 {
   background-color: black;

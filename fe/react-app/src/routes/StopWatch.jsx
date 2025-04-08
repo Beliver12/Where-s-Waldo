@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-//const workerPath = new URL("../timeWorker", import.meta.url);
-//const worker = new Worker(workerPath);
+const workerPath = new URL("../timeWorker", import.meta.url);
+const worker = new Worker(workerPath);
 
 export const StopWatch = ({ isActive }) => {
   const [time, setTime] = useState(0);
 
- /* useEffect(() => {
+  useEffect(() => {
     if (isActive) {
       worker.postMessage("start");
       worker.onmessage = function (e) {
@@ -13,7 +13,7 @@ export const StopWatch = ({ isActive }) => {
         setTime(e.data);
       };
     }
-  }, [isActive]);*/
+  }, [isActive]);
 
   if (isActive) {
     return <h2>{time}</h2>;

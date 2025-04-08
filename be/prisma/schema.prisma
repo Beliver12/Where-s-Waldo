@@ -18,6 +18,7 @@ datasource db {
 model Images {
   id         Int    @id @default(autoincrement()) 
   url        String
+  selected   String
   leaderBoard LeaderBoard[]
   cordinates Cordinates[]
 }
@@ -34,10 +35,11 @@ model LeaderBoard {
 model Cordinates {
   id         Int    @id @default(autoincrement()) 
   url        String
-  cordTopY      Int
-  cordBotY      Int
-  cordLeftX    Int
-  cordRightX   Int
+  cordTopY      String
+  cordBotY      String
+  cordLeftX    String
+   cordRightX   String
+  found       String
   Images     Images     @relation(fields: [imageId], references: [id])
   imageId    Int
 }

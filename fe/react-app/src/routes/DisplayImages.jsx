@@ -1,13 +1,11 @@
-import Image1 from "../assets/Screenshot from 2025-03-24 10-35-04.png";
-import Image2 from "../assets/Screenshot from 2025-03-24 10-35-13.png";
-import Image3 from "../assets/Screenshot from 2025-03-24 10-35-21.png";
 
-export const DisplayImages = ({ isClicked, positionX, positionY, width, height }) => {
+
+export const DisplayImages = ({ isClicked, positionX, positionY, width, height, places, setPlaces, setIsClicked }) => {
   const intX = (16.907368421052634 * width) / 100;
   const intY = 150;
   const percentageX = (positionX / width) * 100;
   const percentageY = (positionY / height) * 100;
-  
+ 
   if (percentageX > 80 && width > 1500) {
     positionX = positionX - intX;
     positionY = positionY + 10;
@@ -76,18 +74,62 @@ export const DisplayImages = ({ isClicked, positionX, positionY, width, height }
   }
 
 
-
-
-  const handleClick = (e) => {
-    e.preventDefault();
+const checkCords = (e) => {
+  e.preventDefault()
+  const num = localStorage.getItem("num")
+  const data = {
+    id: e.target.id,
+    x: percentageX,
+    y: percentageY,
+    num: num
   };
 
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    credentials: 'include',
+    withCredentials: true,
+
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  fetch("http://localhost:3000/cordinates/check", options)
+    .then((res) => res.json())
+    .then((data) => {
+    setPlaces(data.cordinates)
+    setIsClicked(true)
+    })
+}
+
+ 
+
   if (isClicked) {
+   
     return (
       <div className="modal" style={{ top: positionY, left: positionX }}>
-        <img onClick={handleClick} src={Image1} alt="image1" />
-        <img src={Image2} alt="image2" />
-        <img src={Image3} alt="image3" />
+        {places.map((place) => {
+          return(
+            place.found === 'true' ?
+            <img
+            key={place.id}
+            id={place.id}     
+            onClick={checkCords}
+            src={place.url}
+            style={{ borderWidth: 6, borderColor: "green", borderStyle: "solid" }}
+            alt=""
+          /> :
+          <img
+          key={place.id}
+          id={place.id}     
+          onClick={checkCords}
+          src={place.url}
+          alt=""
+        /> 
+          )
+        })}
       </div>
     );
   }
