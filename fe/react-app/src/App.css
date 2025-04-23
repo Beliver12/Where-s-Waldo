@@ -11,14 +11,27 @@
   padding: 0px;
 }
 
+
+
 .main-image {
   width: 100%;
 }
 
+.main-image.unclickable, #play.unclickable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: transparent;
+}
+
 @media only screen and (max-width: 1000px) {
-  .main-image {
-  width: 1000px;
+  .main-image{
+    width: 1000px;
   }
+
 }
 
 .slider.active {
@@ -29,8 +42,7 @@
 
 .modal {
   position: absolute;
-  top: 0;
-  left: 0;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,12 +58,23 @@
   }
 }
 
-.intro-modal {
+.target {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 5px solid black;
+  width: 35px;
+  height: 35px;
+  border-radius: 30px;
+}
+
+.intro-modal, .outro-modal {
   background-color: black;
 
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: fixed;
@@ -66,13 +89,29 @@
   img {
     width: 200px;
     height: 200px;
-   
   }
+  .gif{
 
- 
-
+  width: 30%;
+  height: 50%;
+  }
 }
 
+.homepage{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+  }
+
+  div{
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 h2 {
   background-color: black;
@@ -86,4 +125,85 @@ nav {
   button {
     opacity: 0.9;
   }
+}
+
+.guess-modal,
+.guess-modal2 {
+  display: none;
+  opacity: 0;
+  transition: opacity 250ms ease-in;
+}
+
+.guess-modal.active-correct {
+  display: block;
+  position: fixed;
+  bottom: 0px;
+  width: 100px;
+  left: 0px;
+  width: 100%;
+  background-color: green;
+  opacity: 1;
+}
+
+.guess-modal2.active-incorrect {
+  display: block;
+  position: fixed;
+  bottom: 0px;
+  width: 100px;
+  left: 0px;
+  width: 100%;
+  background-color: red;
+  opacity: 1;
+}
+
+.loading{
+  display: none;
+  opacity: 0;
+  transition: opacity 250ms ease-in;
+}
+
+.loading.active{
+  display: block;
+  position: fixed;
+  
+  bottom: 0px;
+  background-color: rgb(34, 32, 32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  opacity: 1;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+.leaderBoard{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

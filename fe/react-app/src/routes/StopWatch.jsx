@@ -4,12 +4,18 @@ const worker = new Worker(workerPath);
 
 export const StopWatch = ({ isActive }) => {
   const [time, setTime] = useState(0);
-
+ 
   useEffect(() => {
+   
     if (isActive) {
+      
+      document
+      .querySelector(".play").style.pointerEvents = 'auto';
+      
+      document
+      .querySelector(".main-image").style.pointerEvents = 'auto';
       worker.postMessage("start");
       worker.onmessage = function (e) {
-        // console.log('Counter from worker:', e.data);
         setTime(e.data);
       };
     }
@@ -20,4 +26,4 @@ export const StopWatch = ({ isActive }) => {
   }
 };
 
-export default StopWatch
+export default StopWatch;

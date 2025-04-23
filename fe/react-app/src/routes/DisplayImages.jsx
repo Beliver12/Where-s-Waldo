@@ -1,139 +1,152 @@
+import { Link } from "react-router";
+import { useEffect, useState } from "react";
+
+export const DisplayImages = ({
+  isClicked,
+  positionX,
+  positionY,
+  width,
+  height,
+  places,
+  setPlaces,
+  setIsClicked,
+  setStatus,
+}) => {
 
 
-export const DisplayImages = ({ isClicked, positionX, positionY, width, height, places, setPlaces, setIsClicked }) => {
-  const intX = (16.907368421052634 * width) / 100;
-  const intY = 150;
-  const percentageX = (positionX / width) * 100;
-  const percentageY = (positionY / height) * 100;
- 
-  if (percentageX > 80 && width > 1500) {
+
+  const intX = (17.507368421052634 * width) / 100;
+  const intY = (13.907368421052634 * height) / 100;
+  const play = document.getElementById("play");
+  const targetX = positionX;
+  const targetY = positionY;
+  let percentageX;
+  if (play) {
+    percentageX = ((positionX + play.scrollLeft) / width) * 100;
+  }
+  if (percentageX > 80) {
     positionX = positionX - intX;
-    positionY = positionY + 10;
+  } else {
+    positionX = positionX - 5;
   }
-  if (percentageX > 80 && width < 1500 && width > 1000) {
-    positionX = positionX - (intX + 20);
-    positionY = positionY + 10;
-  }
-  if (percentageX > 80 && width < 1000 && width > 800) {
-    positionX = positionX - (intX + 35);
-    positionY = positionY + 10;
-  }
-  if (percentageX > 80 && width < 800 && width > 600) {
-    positionX = positionX - (intX + 45);
-    positionY = positionY + 10;
-  }
-  if (percentageX > 80 && width < 600 && width > 475) {
-    positionX = positionX - (intX + 50);
-    positionY = positionY + 10;
-  }
-  if (percentageX > 65 && width < 475 ) {
-    positionX = positionX - (intX + 60)
-    positionY = positionY + 10;
-  }
-  
 
-  if (percentageY > 80 && width > 1700) {
+  const percentageY = (positionY / height) * 100;
+  if (percentageY > 80) {
     positionY = positionY - intY;
+  } else {
+    positionY = positionY + 40;
   }
 
-  if (percentageY > 80 && width < 1700 && width > 1400) {
-    positionY = positionY - (intY - 20);
-  }
+  const checkCords = (e) => {
+    e.preventDefault();
+    document
+    .querySelector(".play").style.pointerEvents = 'none';
+    
+    document
+    .querySelector(".main-image").style.pointerEvents = 'none';
+    const num = localStorage.getItem("num");
+    const username = localStorage.getItem("user");
+    const data = {
+      id: e.target.id,
+      x: percentageX,
+      y: percentageY,
+      num: num,
+      username: username
+    };
+    setPlaces();
+    const options = {
+      method: "POST",
+      body: JSON.stringify(data),
+      credentials: "include",
+      withCredentials: true,
 
-  if (percentageY > 80 && width < 1400 && width > 1250 ) {
-    positionY = positionY - (intY - 30);
-  }
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
 
+    fetch("http://localhost:3000/cordinates/check", options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setPlaces(data.cordinates);
+        if (data.message === "guess") {
+          document
+            .querySelector(".guess-modal")
+            .classList.add("active-correct");
+        } else {
+          document
+            .querySelector(".guess-modal2")
+            .classList.add("active-incorrect");
+        }
+        if(data.message === 'Game Over') {
+          setStatus('Game Over')
+        }
+        setIsClicked(true);
+        setTimeout(() => {
+          document
+            .querySelector(".guess-modal")
+            .classList.remove("active-correct");
+          document
+            .querySelector(".guess-modal2")
+            .classList.remove("active-incorrect");
+            document
+        }, 3000);
+        document
+            .querySelector(".play").style.pointerEvents = 'auto';
+            
+            document
+            .querySelector(".main-image").style.pointerEvents = 'auto';
+      });
 
-  if (percentageY > 80 && width < 1250 && width > 1100 ) {
-    positionY = positionY - (intY - 40);
-  }
-
-  if (percentageY > 80 && width < 1100 && width > 950 ) {
-    positionY = positionY - (intY - 50);
-  }
-
-  if (percentageY > 80 && width < 950 && width > 800 ) {
-    positionY = positionY - (intY - 60);
-  }
-
-  if (percentageY > 80 && width < 800 && width > 650) {
-    positionY = positionY - (intY - 70);
-  }
-
-  if (percentageY > 80 && width < 650 && width > 500) {
-    positionY = positionY - (intY - 80);
-  }
-
-  if (percentageY > 80 && width < 500 && width > 350) {
-    positionY = positionY - (intY - 90);
-  }
-
-  if (percentageY > 80 && width < 350) {
-    positionY = positionY - (intY - 100);
-  }
-
-
-const checkCords = (e) => {
-  e.preventDefault()
-  const num = localStorage.getItem("num")
-  const data = {
-    id: e.target.id,
-    x: percentageX,
-    y: percentageY,
-    num: num
+     
   };
-
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(data),
-    credentials: 'include',
-    withCredentials: true,
-
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
-
-  fetch("http://localhost:3000/cordinates/check", options)
-    .then((res) => res.json())
-    .then((data) => {
-    setPlaces(data.cordinates)
-    setIsClicked(true)
-    })
-}
-
- 
 
   if (isClicked) {
-   
     return (
-      <div className="modal" style={{ top: positionY, left: positionX }}>
-        {places.map((place) => {
-          return(
-            place.found === 'true' ?
-            <img
-            key={place.id}
-            id={place.id}     
-            onClick={checkCords}
-            src={place.url}
-            style={{ borderWidth: 6, borderColor: "green", borderStyle: "solid" }}
-            alt=""
-          /> :
-          <img
-          key={place.id}
-          id={place.id}     
-          onClick={checkCords}
-          src={place.url}
-          alt=""
-        /> 
-          )
-        })}
-      </div>
+      <>
+        <div
+          className="target"
+          style={{ top: targetY - 20, left: targetX - 20 }}
+        ></div>
+
+        <div role="modal" className="modal" style={{ top: positionY, left: positionX }}>
+          {places === undefined ? (
+            <h2 className="loader"></h2>
+          ) : (
+            places.map((place) => {
+              return place.found === "true" ? (
+                <img
+                  key={place.id}
+                  id={place.id}
+                 
+                  src='/src/assets/check.png'
+                  style={{
+                    borderWidth: 6,
+                    borderColor: "green",
+                    borderStyle: "solid",
+                  }}
+                  alt="image"
+                />
+                
+              ) : (
+                <img
+                  key={place.id}
+                  id={place.id}
+                  onClick={checkCords}
+                  src={place.url}
+                  alt="image"
+                />
+              );
+            })
+          )}
+          
+        </div>
+      </>
     );
   }
   return;
 };
 
-export default DisplayImages
+export default DisplayImages;

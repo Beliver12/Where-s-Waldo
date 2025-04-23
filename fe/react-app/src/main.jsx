@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
-import Start from "./routes/Start.jsx";
+import LeaderBoard from "./routes/LeaderBoard.jsx";
 import Play from "./routes/Play.jsx";
 
 const router = createBrowserRouter([
@@ -12,12 +12,16 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "start",
-    element: <Start />,
+    path: "/play",
+    element: <Play />,
   },
   {
-    path: "start/play",
-    element: <Play />,
+    path: "/play/leaderBoard",
+    element: <LeaderBoard />,
+  },
+  {
+    path: "/leaderBoard",
+    element: <LeaderBoard />,
   },
 ]);
 

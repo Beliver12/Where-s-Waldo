@@ -28,6 +28,7 @@ model LeaderBoard {
   date       DateTime @default(now())    
   userName   String
   time       String
+  finishedGame String
   Images     Images     @relation(fields: [imageId], references: [id])
   imageId    Int
 }

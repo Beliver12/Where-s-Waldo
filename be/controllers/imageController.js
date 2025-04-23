@@ -3,44 +3,46 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 exports.imageGet = async (req, res) => {
-  
+  const image = await prisma.images.findMany({
+    orderBy: [
+      {
+        id: "asc",
+      },
+    ],
+  });
+
+  //await prisma.leaderBoard.deleteMany({})
  
 
-  const image = await prisma.images.findMany({ orderBy: [
-    {
-      id: 'asc',
-    }
-  ],});
 
-  res.send({ message: "Hello", image: image });
+  res.send({ message: "Image returned from database", image: image });
 };
 
 exports.imagePost = async (req, res) => {
-   await prisma.images.updateMany({
-    where:{
-      selected: 'true'
-    },
-    data: {
-      selected: 'false'
-    }
-   })
-
-   await prisma.images.update({
+  await prisma.images.updateMany({
     where: {
-      id: req.body.id
+      selected: "true",
     },
     data: {
-      selected: 'true'
-    }
-   })
-   const image = await prisma.images.findMany({
+      selected: "false",
+    },
+  });
+
+  await prisma.images.update({
+    where: {
+      id: req.body.id,
+    },
+    data: {
+      selected: "true",
+    },
+  });
+  const image = await prisma.images.findMany({
     orderBy: [
       {
-        id: 'asc',
-      }
+        id: "asc",
+      },
     ],
-   });
-   
+  });
 
-   res.send({ image: image });
-}
+  res.send({ image: image });
+};

@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import "../App.css";
-import Image from "../assets/2687263 (1).jpg";
 import DisplayImages from "./DisplayImages";
 import Start from "./StartGame";
 import StopWatch from "./StopWatch";
-
-
-
-
+import GameOver from "./GameOver";
 
 const useMousePosition = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -35,15 +31,24 @@ export const Play = () => {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const [places, setPlaces] = useState();
+  const [load, setLoad] = useState(false)
+  const [status, setStatus] = useState()
+
+  
 
   const handleClick = (e) => {
     e.preventDefault();
     setIsClicked(false);
-   
+
     const body = document.body;
     const html = document.documentElement;
-    const height = Math.max(body.scrollHeight, body.offsetHeight,
-      html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    );
     if (window.scrollY) {
       setX(e.clientX);
       setY(e.clientY + window.scrollY);
@@ -52,13 +57,14 @@ export const Play = () => {
     }
      else {
       setX(e.clientX);
-      
+
       setY(e.clientY);
       setWidth(e.target.clientWidth);
-      setHeight(e.target.clientHeight); 
+      setHeight(e.target.clientHeight);
     }
-   console.log(window.scrollX)
-    console.log("y" ,(y / height) * 100)
+
+    console.log("y", (y / e.target.clientHeight) * 100);
+
     console.log("x", (x / e.target.clientWidth) * 100);
   };
 
@@ -66,16 +72,36 @@ export const Play = () => {
   return (
     <>
       <nav>
-     
         {" "}
         <StopWatch isActive={isActive} />
+        
         <button>
           <Link to="/">Home</Link>{" "}
         </button>
       </nav>
-      <Start start={isActive} setIsActive={setIsActive} setImage={setImage} setPlaces={setPlaces} />
-      <div onClick={() => setIsClicked(!isClicked)} id="play">
-        <DisplayImages
+      <Start
+        start={isActive}
+        setIsActive={setIsActive}
+        setImage={setImage}
+        setPlaces={setPlaces}
+        setLoad={setLoad}
+        load={load}
+      />
+     
+      <div className="play" onClick={() => setIsClicked(!isClicked)} id="play">
+       
+        <img
+          id={image ? image.id : null}
+          className="main-image"
+          onClick={handleClick}
+          src={image ? image.url : null}
+          alt=""
+        />
+        <div className="guess-modal">Correct</div>
+        <div className="guess-modal2">Incorrect</div>
+      </div>
+
+      <DisplayImages
           isClicked={isClicked}
           positionX={x}
           positionY={y}
@@ -84,15 +110,10 @@ export const Play = () => {
           places={places}
           setPlaces={setPlaces}
           setIsClicked={setIsClicked}
+          setStatus={setStatus}
         />
-        <img
-          id={image ? image.id : null}
-          className="main-image"
-          onClick={handleClick}
-          src={image ? image.url : null}
-          alt=""
-        />
-      </div>
+
+        <GameOver status={status}/>
     </>
   );
 };
