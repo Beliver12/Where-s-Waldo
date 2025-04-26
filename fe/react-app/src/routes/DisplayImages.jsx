@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import React from "react";
 import { useEffect, useState } from "react";
 
 export const DisplayImages = ({
@@ -12,9 +13,6 @@ export const DisplayImages = ({
   setIsClicked,
   setStatus,
 }) => {
-
-
-
   const intX = (17.507368421052634 * width) / 100;
   const intY = (13.907368421052634 * height) / 100;
   const play = document.getElementById("play");
@@ -37,21 +35,23 @@ export const DisplayImages = ({
     positionY = positionY + 40;
   }
 
+ 
   const checkCords = (e) => {
     e.preventDefault();
-    document
-    .querySelector(".play").style.pointerEvents = 'none';
-    
-    document
-    .querySelector(".main-image").style.pointerEvents = 'none';
+    document.querySelector(".play").style.pointerEvents = "none";
+
+    document.querySelector(".main-image").style.pointerEvents = "none";
     const num = localStorage.getItem("num");
     const username = localStorage.getItem("user");
+    const userId = localStorage.getItem("userId");
+
     const data = {
       id: e.target.id,
       x: percentageX,
       y: percentageY,
       num: num,
-      username: username
+      username: username,
+      userId: userId,
     };
     setPlaces();
     const options = {
@@ -69,7 +69,7 @@ export const DisplayImages = ({
     fetch("http://localhost:3000/cordinates/check", options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setPlaces(data.cordinates);
         if (data.message === "guess") {
           document
@@ -80,8 +80,8 @@ export const DisplayImages = ({
             .querySelector(".guess-modal2")
             .classList.add("active-incorrect");
         }
-        if(data.message === 'Game Over') {
-          setStatus('Game Over')
+        if (data.message === "Game Over") {
+          setStatus("Game Over");
         }
         setIsClicked(true);
         setTimeout(() => {
@@ -91,16 +91,13 @@ export const DisplayImages = ({
           document
             .querySelector(".guess-modal2")
             .classList.remove("active-incorrect");
-            document
+          document;
         }, 3000);
-        document
-            .querySelector(".play").style.pointerEvents = 'auto';
-            
-            document
-            .querySelector(".main-image").style.pointerEvents = 'auto';
-      });
+        document.querySelector(".play").style.pointerEvents = "auto";
 
-     
+        document.querySelector(".main-image").style.pointerEvents = "auto";
+      });
+      
   };
 
   if (isClicked) {
@@ -111,17 +108,23 @@ export const DisplayImages = ({
           style={{ top: targetY - 20, left: targetX - 20 }}
         ></div>
 
-        <div role="modal" className="modal" style={{ top: positionY, left: positionX }}>
+        <div
+          role="modal"
+          className="modal"
+          style={{ top: positionY, left: positionX }}
+        >
           {places === undefined ? (
-            <h2 className="loader"></h2>
+             <div className="loader-parent">
+             <label>Loading</label>
+             <h2 className="loader"></h2>
+             </div>
           ) : (
             places.map((place) => {
               return place.found === "true" ? (
                 <img
                   key={place.id}
                   id={place.id}
-                 
-                  src='/src/assets/check.png'
+                  src="/src/assets/check.png"
                   style={{
                     borderWidth: 6,
                     borderColor: "green",
@@ -129,7 +132,6 @@ export const DisplayImages = ({
                   }}
                   alt="image"
                 />
-                
               ) : (
                 <img
                   key={place.id}
@@ -141,7 +143,6 @@ export const DisplayImages = ({
               );
             })
           )}
-          
         </div>
       </>
     );
@@ -149,4 +150,4 @@ export const DisplayImages = ({
   return;
 };
 
-export default DisplayImages;
+export default React.memo(DisplayImages);

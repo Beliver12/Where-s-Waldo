@@ -1,26 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import "../App.css";
-import DisplayImages from "./DisplayImages";
-import Start from "./StartGame";
-import StopWatch from "./StopWatch";
-import GameOver from "./GameOver";
+const DisplayImages = React.lazy(() => import('./DisplayImages'));
+const Start = React.lazy(() => import('./StartGame'));
+const StopWatch = React.lazy(() => import('./StopWatch'));
+const GameOver = React.lazy(() => import('./GameOver'));
 
-const useMousePosition = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const setFromEvent = (e) => setPosition({ x: e.clientX, y: e.clientY });
-
-    window.addEventListener("mousemove", setFromEvent);
-    return () => {
-      window.removeEventListener("mousemove", setFromEvent);
-    };
-  }, []);
-
-  return position;
-};
 
 export const Play = () => {
   const [x, setX] = useState();
@@ -31,65 +17,80 @@ export const Play = () => {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const [places, setPlaces] = useState();
-  const [load, setLoad] = useState(false)
-  const [status, setStatus] = useState()
-
-  
+  const  [placesForDropDownMenu, setPlacesForDropDownMenu] = useState();
+  const [load, setLoad] = useState(false);
+  const [status, setStatus] = useState();
 
   const handleClick = (e) => {
     e.preventDefault();
     setIsClicked(false);
 
-    const body = document.body;
-    const html = document.documentElement;
-    const height = Math.max(
-      body.scrollHeight,
-      body.offsetHeight,
-      html.clientHeight,
-      html.scrollHeight,
-      html.offsetHeight,
-    );
     if (window.scrollY) {
       setX(e.clientX);
       setY(e.clientY + window.scrollY);
       setWidth(e.target.clientWidth);
       setHeight(e.target.clientHeight);
-    }
-     else {
+    } else {
       setX(e.clientX);
 
       setY(e.clientY);
       setWidth(e.target.clientWidth);
       setHeight(e.target.clientHeight);
     }
-
+   
     console.log("y", (y / e.target.clientHeight) * 100);
 
     console.log("x", (x / e.target.clientWidth) * 100);
   };
 
-  const position = useMousePosition();
+const dropdown = (e) => {
+  e.preventDefault()
+
+  const dropdown = document.querySelector(".dropdown");
+  if(dropdown.classList.contains("show")) {
+    document.querySelector(".dropdown").classList.remove("show");
+  } else {
+  document.querySelector(".dropdown").classList.add("show");
+  }
+}
+
   return (
     <>
       <nav>
         {" "}
         <StopWatch isActive={isActive} />
-        
-        <button>
-          <Link to="/">Home</Link>{" "}
+        <div className="dropdown-parent">
+        <button onClick={dropdown}>
+         toggle
         </button>
+        <div className="dropdown show">
+        { placesForDropDownMenu === undefined? (
+           <h2 className="loader"></h2>
+        ):
+        placesForDropDownMenu.map((place) => {
+          return (
+            <img
+                  key={place.id}
+                  id={place.id}
+                  src={place.url}
+                  alt="image"
+                />
+          )
+        })}
+        </div>
+        </div>
       </nav>
       <Start
-        start={isActive}
+        gameStarted={isActive}
         setIsActive={setIsActive}
         setImage={setImage}
         setPlaces={setPlaces}
         setLoad={setLoad}
+        setPlacesForDropDownMenu={setPlacesForDropDownMenu}
         load={load}
       />
-     
+
       <div className="play" onClick={() => setIsClicked(!isClicked)} id="play">
-       
         <img
           id={image ? image.id : null}
           className="main-image"
@@ -102,20 +103,20 @@ export const Play = () => {
       </div>
 
       <DisplayImages
-          isClicked={isClicked}
-          positionX={x}
-          positionY={y}
-          width={width}
-          height={height}
-          places={places}
-          setPlaces={setPlaces}
-          setIsClicked={setIsClicked}
-          setStatus={setStatus}
-        />
+        isClicked={isClicked}
+        positionX={x}
+        positionY={y}
+        width={width}
+        height={height}
+        places={places}
+        setPlaces={setPlaces}
+        setIsClicked={setIsClicked}
+        setStatus={setStatus}
+      />
 
-        <GameOver status={status}/>
+      <GameOver status={status} />
     </>
   );
 };
 
-export default Play;
+export default React.memo(Play);

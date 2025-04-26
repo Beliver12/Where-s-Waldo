@@ -6,66 +6,61 @@ exports.cordinatesPost = async (req, res) => {
   const nums = [0, 1, 2, 3, 4, 5, 6];
   const num = nums[Math.floor(Math.random() * nums.length)];
 
-  
- 
-    const image = await prisma.images.findMany({
-      where: {
-        selected: 'true'
-      }
-    })
-   const id = image[0].id
-  
+  const image = await prisma.images.findMany({
+    where: {
+      selected: "true",
+    },
+  });
+  const id = image[0].id;
+
   await prisma.cordinates.updateMany({
-      where: {
-        found: "true",
-      },
-      data: {
-        found: "false",
-      },
-    });
+    where: {
+      found: "true",
+    },
+    data: {
+      found: "false",
+    },
+  });
 
   const cordinates = await prisma.cordinates.findMany({
     skip: num,
     take: 3,
     where: {
       imageId: id,
-      found: 'false'
+      found: "false",
     },
   });
 
-  const user = await prisma.leaderBoard.findMany({
-    where: {
-      userName: req.body.username,
-      imageId: id,
-    },
-  });
 
-  if (user.length !== 0) {
+  if (req.body.username === "") {
     return res.status(400).send({
-      error: 'Username allready in use.',
-    });
-  } 
-   if(req.body.username === '') {
-    return res.status(400).send({
-      error: 'Username required.',
+      error: "Username required.",
     });
   }
- 
-    const date = new Date()
-    const time = ((date.getHours() * 3600) + (date.getMinutes() * 60) + date.getSeconds()).toString()
 
-    await prisma.leaderBoard.create({
-      data: {
-        userName: req.body.username,
-        time: time,
-        imageId: id,
-        finishedGame: 'false'
-      }
-    })
-  
+  const date = new Date();
+  const time = (
+    date.getHours() * 3600 +
+    date.getMinutes() * 60 +
+    date.getSeconds()
+  ).toString();
 
-  res.send({ cordinates: cordinates, num: num, messsage: 'success' });
+  const user = await prisma.leaderBoard.create({
+    data: {
+      userName: req.body.username,
+      time: time,
+      imageId: id,
+      finishedGame: "false",
+    },
+  });
+
+  console.log(user)
+
+
+  res.send({ cordinates: cordinates, num: num, messsage: "success", userId: user.id });
 };
+
+///
 
 exports.cordinatesCheck = async (req, res) => {
   const id = Number(req.body.id);
@@ -95,28 +90,37 @@ exports.cordinatesCheck = async (req, res) => {
 
   const image = await prisma.images.findMany({
     where: {
-      selected: 'true'
-    }
-  })
- const imgId = image[0].id
+      selected: "true",
+    },
+  });
+  const imgId = image[0].id;
 
   const num = Number(req.body.num);
   const cordinates = await prisma.cordinates.findMany({
     skip: num,
     take: 3,
-    where:{
-      imageId: imgId
-    }
+    where: {
+      imageId: imgId,
+    
+    },
   });
 
-  let numOfGuesses = [];
+  /*let numOfGuesses = [];
   cordinates.forEach((cord) => {
     if (cord.found === "true") {
       numOfGuesses.push(cord.found);
     }
-  });
+  });*/
 
-  if (numOfGuesses.length === 3) {
+  const guesses =  await prisma.cordinates.findMany({
+    where: {
+      imageId: imgId,
+      found: 'true'
+    },
+   })
+  
+
+  if (guesses.length === 3) {
     await prisma.cordinates.updateMany({
       where: {
         found: "true",
@@ -125,40 +129,45 @@ exports.cordinatesCheck = async (req, res) => {
         found: "false",
       },
     });
-    message = "Game Over"
+    message = "Game Over";
 
     const image = await prisma.images.findMany({
       where: {
-        selected: 'true'
-      }
-    })
-   const id = image[0].id
-
+        selected: "true",
+      },
+    });
+    const id = image[0].id;
+    const userId = Number(req.body.userId)
     const leaderBoard = await prisma.leaderBoard.findMany({
-      where:{
+      where: {
         userName: req.body.username,
-        imageId: id
-      }
-    })
-    const startTime = Number(leaderBoard[0].time)
-    const date = new Date()
-    const time = ((date.getHours() * 3600) + (date.getMinutes() * 60) + date.getSeconds()).toString()
+        imageId: id,
+        id: userId,
+      },
+    });
+    const startTime = Number(leaderBoard[0].time);
+    const date = new Date();
+    const time = (
+      date.getHours() * 3600 +
+      date.getMinutes() * 60 +
+      date.getSeconds()
+    ).toString();
 
-    const currentTime =  (time - startTime).toString();
-    currentTime
+    const currentTime = (time - startTime).toString();
+    currentTime;
+   
     await prisma.leaderBoard.updateMany({
-      where:{
+      where: {
         userName: req.body.username,
-        imageId: id
+        imageId: id,
+        id: userId,
       },
       data: {
         time: currentTime,
-        finishedGame: 'true'
-      }
-    })
+        finishedGame: "true",
+      },
+    });
   }
-
-  
 
   res.send({ cordinates: cordinates, message: message });
 };

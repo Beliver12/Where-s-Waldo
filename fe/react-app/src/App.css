@@ -1,3 +1,27 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "SuperPixel";
+  font-style: italic;
+
+  .timer, .time, .date{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: italic;
+  }
+}
+
+@font-face {
+  font-family: "SuperPixel";
+  src: local("SuperPixel"),
+    url("../SuperPixel-m2L8j.ttf") format("opentype");
+  font-weight: normal;
+}
+
+.selector {
+  font-family: "SuperPixel";
+  font-style: italic;
+  }
+
 #root {
   height: 100%;
   width: 100%;
@@ -11,13 +35,12 @@
   padding: 0px;
 }
 
-
-
 .main-image {
   width: 100%;
 }
 
-.main-image.unclickable, #play.unclickable {
+.main-image.unclickable,
+#play.unclickable {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,10 +51,9 @@
 }
 
 @media only screen and (max-width: 1000px) {
-  .main-image{
+  .main-image {
     width: 1000px;
   }
-
 }
 
 .slider.active {
@@ -68,7 +90,8 @@
   border-radius: 30px;
 }
 
-.intro-modal, .outro-modal {
+.intro-modal,
+.outro-modal {
   background-color: black;
 
   width: 100%;
@@ -90,26 +113,37 @@
     width: 200px;
     height: 200px;
   }
-  .gif{
-
-  width: 30%;
-  height: 50%;
+  .gif {
+    width: 30%;
+    height: 50%;
   }
 }
 
-.homepage{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.homepage {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,
+              minmax(200px, 1fr));
+            grid-gap: 10px;
+  width: 50%;
+  justify-self: center;
 
   img {
     width: 200px;
     height: 200px;
   }
 
-  div{
+  div {
     display: flex;
     flex-direction: column;
+  
+    button{
+      width: 200px;
+    }
+    
+  }
+
+  button > a{
+    color: black;
   }
 }
 
@@ -119,11 +153,18 @@ h2 {
 
 nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   position: fixed;
+  
+  width: 20%;
 
   button {
     opacity: 0.9;
+  }
+
+  h2{
+    width: 100px;
+    opacity: 0.8;
   }
 }
 
@@ -156,22 +197,22 @@ nav {
   opacity: 1;
 }
 
-.loading{
+.loading {
   display: none;
   opacity: 0;
   transition: opacity 250ms ease-in;
 }
 
-.loading.active{
+.loading.active {
   display: block;
   position: fixed;
-  
+
   bottom: 0px;
   background-color: rgb(34, 32, 32);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
+  width: 180px;
   height: 80px;
   opacity: 1;
 }
@@ -180,30 +221,74 @@ nav {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
+  
   width: 40px;
   height: 40px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
 
+.loader-parent{
+  grid-column: 3/4;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
 }
 
-.leaderBoard{
+.leaderBoard {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.dropdown{
+  display: none;
+  position: absolute;
+  background-color: rgb(31, 30, 30);
+  min-width: 60px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown.show{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-parent{
+  position: relative;
+  display: inline-block;
+}
+
+tbody{
+  img {
+    width: 30px;
+    height: 30px;
+  }
 }

@@ -12,8 +12,6 @@ exports.imageGet = async (req, res) => {
   });
 
   //await prisma.leaderBoard.deleteMany({})
- 
-
 
   res.send({ message: "Image returned from database", image: image });
 };
