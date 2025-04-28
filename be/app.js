@@ -39,7 +39,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://where-s-waldo-tau.vercel.app",
     credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: ["Content-Type"],
