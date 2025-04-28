@@ -127,7 +127,7 @@ export const DisplayImages = ({
                 loading="lazy"
                   key={place.id}
                   id={place.id}
-                  src="/src/assets/check.png"
+                  src="/check.png"
                   style={{
                     borderWidth: 6,
                     borderColor: "green",

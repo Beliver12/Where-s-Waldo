@@ -71,7 +71,7 @@ export const LeaderBoard = () => {
                     <td>{leader.userName}</td>
                     <td className="time">{leader.time}</td>
                 
-                    <td><img src="/src/assets/medal.png" alt="" /></td>
+                    <td><img src="/medal.png" alt="" /></td>
                   </tr>
                 </tbody>
               ) :
@@ -81,7 +81,7 @@ export const LeaderBoard = () => {
                     <td className="date">{leader.date}</td>
                     <td>{leader.userName}</td>
                     <td className="time">{leader.time}</td>
-                    <td><img src="/src/assets/medal (1).png" alt="" /></td>
+                    <td><img src="/medal (1).png" alt="" /></td>
                   </tr>
                 </tbody>
               ) :
@@ -91,7 +91,7 @@ export const LeaderBoard = () => {
                     <td className="date">{leader.date}</td>
                     <td>{leader.userName}</td>
                     <td className="time">{leader.time}</td>
-                    <td><img src="/src/assets/medal (2).png" alt="" /></td>
+                    <td><img src="/medal (2).png" alt="" /></td>
                   </tr>
                 </tbody>
               ) :

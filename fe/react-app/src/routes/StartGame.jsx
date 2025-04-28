@@ -110,7 +110,7 @@ useEffect(() => {
         },
       };
 
-      fetch("https://where-s-waldo-tau.vercel.app/cordinates", options)
+      fetch("https://captivating-art-where-is-waldo.up.railway.app/cordinates", options)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
