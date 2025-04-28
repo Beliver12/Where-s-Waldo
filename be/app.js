@@ -21,6 +21,8 @@ const databaseUrl =
 
 
 const corsOptions = {
+  origin: 'https://where-s-waldo-tau.vercel.app', // Allow requests from your frontend
+  methods: 'GET', // Allow GET requests
   origin: function (origin, callback) {
     if (!origin) {
       console.log("CORS: No origin (maybe server-to-server request)");
