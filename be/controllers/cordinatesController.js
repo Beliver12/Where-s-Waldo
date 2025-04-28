@@ -33,7 +33,7 @@ const [cordinates, user] = await Promise.all([
         date.getHours() * 3600 +
         date.getMinutes() * 60 +
         date.getSeconds()
-      ).toString(),
+      ),
       imageId: id,
       finishedGame: "false",
     },
@@ -126,7 +126,7 @@ exports.cordinatesCheck = async (req, res) => {
           date.getHours() * 3600 +
           date.getMinutes() * 60 +
           date.getSeconds()
-        ).toString() - Number(req.body.time)).toString(),
+        ) - Number(req.body.time)),
         finishedGame: "true",
       },
     });
