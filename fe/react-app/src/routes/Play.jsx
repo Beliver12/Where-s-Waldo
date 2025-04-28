@@ -70,6 +70,7 @@ const dropdown = (e) => {
         placesForDropDownMenu.map((place) => {
           return (
             <img
+            loading="lazy"
                   key={place.id}
                   id={place.id}
                   src={place.url}
@@ -92,6 +93,7 @@ const dropdown = (e) => {
 
       <div className="play" onClick={() => setIsClicked(!isClicked)} id="play">
         <img
+        loading="lazy"
           id={image ? image.id : null}
           className="main-image"
           onClick={handleClick}

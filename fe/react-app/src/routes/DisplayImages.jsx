@@ -44,6 +44,7 @@ export const DisplayImages = ({
     const num = localStorage.getItem("num");
     const username = localStorage.getItem("user");
     const userId = localStorage.getItem("userId");
+    const time = localStorage.getItem("time");
 
     const data = {
       id: e.target.id,
@@ -52,6 +53,7 @@ export const DisplayImages = ({
       num: num,
       username: username,
       userId: userId,
+      time: time
     };
     setPlaces();
     const options = {
@@ -66,7 +68,7 @@ export const DisplayImages = ({
       },
     };
 
-    fetch("http://localhost:3000/cordinates/check", options)
+    fetch("https://postgres-project.up.railway.app/cordinates/check", options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -122,6 +124,7 @@ export const DisplayImages = ({
             places.map((place) => {
               return place.found === "true" ? (
                 <img
+                loading="lazy"
                   key={place.id}
                   id={place.id}
                   src="/src/assets/check.png"
@@ -134,6 +137,7 @@ export const DisplayImages = ({
                 />
               ) : (
                 <img
+                loading="lazy"
                   key={place.id}
                   id={place.id}
                   onClick={checkCords}

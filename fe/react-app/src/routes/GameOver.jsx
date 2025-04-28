@@ -8,7 +8,7 @@ export const GameOver = ({ status }) => {
   const [seletcionImage, setSelectionImage] = useState();
 
   if (!stop) {
-    fetch("http://localhost:3000/image")
+    fetch("https://postgres-project.up.railway.app/image")
       .then(function (response) {
         return response.json();
       })
@@ -40,6 +40,7 @@ export const GameOver = ({ status }) => {
               <div key={img.id}>
                 {" "}
                 <img
+                loading="lazy"
                   key={img.id}
                   id={img.id}
                   className="image"

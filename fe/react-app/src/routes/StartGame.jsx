@@ -21,7 +21,7 @@ export const Start = ({
 useEffect(() => {
 
   if (!load) {
-    fetch("http://localhost:3000/image")
+    fetch("https://postgres-project.up.railway.app/image")
       .then(function (response) {
         return response.json();
       })
@@ -45,6 +45,10 @@ useEffect(() => {
       document.querySelector(".loading").classList.add("active");
 
       document.querySelector(".start").disabled = true;
+      document.querySelector(".play").style.pointerEvents = "none";
+
+      document.querySelector(".main-image").style.pointerEvents = "none";
+      document.querySelector(".intro-modal").style.pointerEvents = "none";
       const id = Number(e.target.id);
 
       setSelectedImageId(id);
@@ -70,7 +74,7 @@ useEffect(() => {
         },
       };
 
-      fetch("http://localhost:3000/image/selected", options)
+      fetch("https://postgres-project.up.railway.app/image/selected", options)
         .then((res) => res.json())
         .then((data) => {
           setSelectionImage(data.image);
@@ -78,6 +82,7 @@ useEffect(() => {
 
       setTimeout(() => {
         document.querySelector(".loading").classList.remove("active");
+        document.querySelector(".intro-modal").style.pointerEvents = "auto";
 
         document.querySelector(".start").disabled = false;
       }, 2000);
@@ -105,7 +110,7 @@ useEffect(() => {
         },
       };
 
-      fetch("http://localhost:3000/cordinates", options)
+      fetch("https://postgres-project.up.railway.app/cordinates", options)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -113,7 +118,8 @@ useEffect(() => {
           setPlacesForDropDownMenu(data.cordinates)
           localStorage.setItem("num", data.num);
           localStorage.setItem("user", username);
-          localStorage.setItem("userId", data.userId)
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("time", data.time);
 
           if (!data.error) {
             setIsActive(true);
@@ -127,7 +133,7 @@ useEffect(() => {
         document.querySelector(".intro-modal").style.pointerEvents = "auto";
 
         document.querySelector(".loading").classList.remove("active");
-      }, 3000);
+      }, 10000);
     };
 
     return (
@@ -147,6 +153,7 @@ useEffect(() => {
             seletcionImage.map((img) => {
               return img.selected === "true" ? (
               <div  key={img.id}>  <img
+              loading="lazy"
                   key={img.id}
                   id={img.id}
                   onClick={selectImage}
@@ -170,6 +177,7 @@ useEffect(() => {
                 </div>
               ) : (
                <div  key={img.id}> <img
+               loading="lazy"
                   tabIndex="0"
                   key={img.id}
                   id={img.id}

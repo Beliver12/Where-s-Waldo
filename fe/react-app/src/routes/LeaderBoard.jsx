@@ -25,7 +25,7 @@ export const LeaderBoard = () => {
       },
     };
 
-    fetch("http://localhost:3000/leaderBoard", options)
+    fetch("https://postgres-project.up.railway.app/leaderBoard", options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
