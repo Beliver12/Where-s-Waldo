@@ -20,7 +20,7 @@ const databaseUrl =
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: databaseUrl,
+      url: process.env.DATABASE_URL,
     },
   },
 });
