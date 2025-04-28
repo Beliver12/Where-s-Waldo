@@ -19,6 +19,7 @@ const prisma = new PrismaClient({
   },
 });
 
+// Only set up CORS once
 const allowedOrigins = [
   'https://where-s-waldo-tau.vercel.app',
   'https://where-s-waldo-380sj663c-beliver12s-projects.vercel.app',
@@ -37,30 +38,13 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "https://where-s-waldo-tau.vercel.app",
-    credentials: true,
-    optionsSuccessStatus: 200,
-    allowedHeaders: ["Content-Type"],
-  }),
-);
-
+// Body parsers
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header("Content-Type", "application/json;charset=UTF-8");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-  );
-  next();
-});
 
+// Routes
 app.use("/leaderBoard", routes.leaderBoard);
 app.use("/image", routes.image);
 app.use("/cordinates", routes.cordinates);
