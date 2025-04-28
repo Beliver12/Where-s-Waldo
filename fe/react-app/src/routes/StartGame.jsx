@@ -74,7 +74,7 @@ useEffect(() => {
         },
       };
 
-      fetch("https://postgres-project.up.railway.app/image/selected", options)
+      fetch("https://where-s-waldo-tau.vercel.app/image/selected", options)
         .then((res) => res.json())
         .then((data) => {
           setSelectionImage(data.image);
@@ -110,7 +110,7 @@ useEffect(() => {
         },
       };
 
-      fetch("https://postgres-project.up.railway.app/cordinates", options)
+      fetch("https://where-s-waldo-tau.vercel.app/cordinates", options)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);

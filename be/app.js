@@ -21,7 +21,7 @@ const prisma = new PrismaClient({
 
 const allowedOrigins = [
   'https://where-s-waldo-tau.vercel.app',
-  'https://where-s-waldo-ng8an4ldq-beliver12s-projects.vercel.app',
+  'https://where-s-waldo-380sj663c-beliver12s-projects.vercel.app',
 ];
 
 app.use(

@@ -25,7 +25,7 @@ export const LeaderBoard = () => {
       },
     };
 
-    fetch("https://postgres-project.up.railway.app/leaderBoard", options)
+    fetch("https://where-s-waldo-tau.vercel.app/leaderBoard", options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
