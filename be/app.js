@@ -51,6 +51,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.header("Content-Type", "application/json;charset=UTF-8");
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
