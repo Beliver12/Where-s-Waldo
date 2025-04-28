@@ -7,7 +7,7 @@ export const App = () => {
   const [seletcionImage, setSelectionImage] = useState();
 
   if (!stop) {
-    fetch("https://wheres-waldo-project.up.railway.app/image", {  credentials: "include",})
+    fetch("https://captivating-art-where-is-waldo.up.railway.app/image", {  credentials: "include",})
       .then(function (response) {
         return response.json();
       })

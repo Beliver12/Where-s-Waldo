@@ -68,7 +68,7 @@ export const DisplayImages = ({
       },
     };
 
-    fetch("https://where-s-waldo-tau.vercel.app/cordinates/check", options)
+    fetch("https://captivating-art-where-is-waldo.up.railway.app/cordinates/check", options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

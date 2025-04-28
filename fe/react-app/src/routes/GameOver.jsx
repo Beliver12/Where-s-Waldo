@@ -8,7 +8,7 @@ export const GameOver = ({ status }) => {
   const [seletcionImage, setSelectionImage] = useState();
 
   if (!stop) {
-    fetch("https://where-s-waldo-tau.vercel.app/image")
+    fetch("https://captivating-art-where-is-waldo.up.railway.app/image")
       .then(function (response) {
         return response.json();
       })

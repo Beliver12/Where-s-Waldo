@@ -25,7 +25,7 @@ export const LeaderBoard = () => {
       },
     };
 
-    fetch("https://where-s-waldo-tau.vercel.app/leaderBoard", options)
+    fetch("https://captivating-art-where-is-waldo.up.railway.app/leaderBoard", options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

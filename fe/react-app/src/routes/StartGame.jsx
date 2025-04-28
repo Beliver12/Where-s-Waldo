@@ -21,7 +21,7 @@ export const Start = ({
 useEffect(() => {
 
   if (!load) {
-    fetch("https://postgres-project.up.railway.app/image")
+    fetch("https://captivating-art-where-is-waldo.up.railway.app/image")
       .then(function (response) {
         return response.json();
       })
@@ -74,7 +74,7 @@ useEffect(() => {
         },
       };
 
-      fetch("https://where-s-waldo-tau.vercel.app/image/selected", options)
+      fetch("https://captivating-art-where-is-waldo.up.railway.app/image/selected", options)
         .then((res) => res.json())
         .then((data) => {
           setSelectionImage(data.image);
