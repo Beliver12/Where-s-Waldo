@@ -6,12 +6,6 @@ require("dotenv").config();
 const { PrismaClient } = require("@prisma/client");
 const routes = require("./routes");
 
-// Only set up CORS once
-const allowedOrigins = [
-  'https://where-s-waldo-tau.vercel.app',
-  'https://where-s-waldo-380sj663c-beliver12s-projects.vercel.app',
-];
-
 const databaseUrl =
   process.env.NODE_ENV === "test"
     ? process.env.TEST_DATABASE_URL
@@ -19,35 +13,24 @@ const databaseUrl =
 
 
 
-
-const corsOptions = {
-  origin: 'https://where-s-waldo-tau.vercel.app', // Allow requests from your frontend
-  methods: 'GET', // Allow GET requests
-  origin: function (origin, callback) {
-    if (!origin) {
-      console.log("CORS: No origin (maybe server-to-server request)");
-      return callback(null, true);
-    }
-    if (allowedOrigins.includes(origin)) {
-      console.log(`CORS: Allowing origin ${origin}`);
-      return callback(null, true);
-    } else {
-      console.error(`CORS: Blocked origin ${origin}`);
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-
-// Body parsers
+    app.use(cors({
+      origin: 'https://where-s-waldo-tau.vercel.app'
+    }));
+    
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(function (req, res, next) {
+  res.header("Content-Type", "application/json;charset=UTF-8");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept",
+  );
+  next();
+});
 
-// Routes
 app.use("/leaderBoard", routes.leaderBoard);
 app.use("/image", routes.image);
 app.use("/cordinates", routes.cordinates);
