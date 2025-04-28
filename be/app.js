@@ -6,7 +6,7 @@ require("dotenv").config();
 const { PrismaClient } = require("@prisma/client");
 const routes = require("./routes");
 
-/*const allowedOrigins = [
+const allowedOrigins = [
   'https://where-s-waldo-tau.vercel.app',
   'https://where-s-waldo-etg8v1720-beliver12s-projects.vercel.app',
 ];
@@ -23,10 +23,10 @@ app.use(
     },
     credentials: true,
   })
-);*/
+);
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://where-s-waldo-tau.vercel.app',
     credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: ['Content-Type'],
