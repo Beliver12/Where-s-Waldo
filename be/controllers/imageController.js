@@ -4,6 +4,13 @@ const prisma = new PrismaClient();
 
 exports.imageGet = async (req, res) => {
 
+  //await prisma.leaderBoard.deleteMany({})
+
+
+const prisma = new PrismaClient();
+
+
+//await prisma.leaderBoard.deleteMany({})
 
   const [image, i] = await Promise.all([
     prisma.images.findMany({
@@ -21,8 +28,7 @@ exports.imageGet = async (req, res) => {
       data: {
         found: "false",
       },
-    })
-    
+    }) 
   ])
 
   res.send({ message: "Image returned from database", image: image });

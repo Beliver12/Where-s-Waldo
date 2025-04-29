@@ -32,6 +32,7 @@ model LeaderBoard {
   finishedGame String
   Images     Images     @relation(fields: [imageId], references: [id])
   imageId    Int
+  cordinates Cordinates[]
 }
 
 model Cordinates {
@@ -44,6 +45,10 @@ model Cordinates {
   found       String
   Images     Images     @relation(fields: [imageId], references: [id])
   imageId    Int
+ LeaderBoard LeaderBoard? @relation(fields: [leaderBoardId], references: [id])
+
+ leaderBoardId Int?
+
 }
 
 model Session {

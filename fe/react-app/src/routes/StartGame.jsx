@@ -116,10 +116,11 @@ useEffect(() => {
           console.log(data);
           setPlaces(data.cordinates);
           setPlacesForDropDownMenu(data.cordinates)
-          localStorage.setItem("num", data.num);
-          localStorage.setItem("user", username);
-          localStorage.setItem("userId", data.userId);
-          localStorage.setItem("time", data.time);
+          sessionStorage.setItem("num", data.num);
+          sessionStorage.setItem("user", username);
+          sessionStorage.setItem("userId", data.userId);
+          sessionStorage.setItem("time", data.time);
+          sessionStorage.setItem("leaderBoardId", data.leaderBoardId)
 
           if (!data.error) {
             setIsActive(true);

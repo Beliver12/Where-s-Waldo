@@ -41,10 +41,11 @@ export const DisplayImages = ({
     document.querySelector(".play").style.pointerEvents = "none";
 
     document.querySelector(".main-image").style.pointerEvents = "none";
-    const num = localStorage.getItem("num");
-    const username = localStorage.getItem("user");
-    const userId = localStorage.getItem("userId");
-    const time = localStorage.getItem("time");
+    const num = sessionStorage.getItem("num");
+    const username = sessionStorage.getItem("user");
+    const userId = sessionStorage.getItem("userId");
+    const time = sessionStorage.getItem("time");
+    const leaderBoardId = sessionStorage.getItem("leaderBoardId")
 
     const data = {
       id: e.target.id,
@@ -53,7 +54,8 @@ export const DisplayImages = ({
       num: num,
       username: username,
       userId: userId,
-      time: time
+      time: time,
+      leaderBoardId: leaderBoardId
     };
     setPlaces();
     const options = {
