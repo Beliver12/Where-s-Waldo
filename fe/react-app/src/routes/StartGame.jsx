@@ -198,11 +198,11 @@ useEffect(() => {
               );
             })
           )}
-        </div>
-        {seletcionImage === undefined ? (
+        
+           {seletcionImage === undefined ? (
           ""
         ) : (
-          <form onSubmit={startTheGame} method="POST">
+          <form className="startForm" onSubmit={startTheGame} method="POST">
             <label htmlFor="username">Username</label>
             <p>{error}</p>
             <input
@@ -219,6 +219,8 @@ useEffect(() => {
             </button>
           </form>
         )}
+        </div>
+       
       </div>
     );
   }
