@@ -7,9 +7,6 @@ exports.cordinatesPost = async (req, res) => {
   const num = nums[Math.floor(Math.random() * nums.length)];
 
 
-
-  
-
   const image = await prisma.images.findFirst({
       where: {
         selected: "true",
@@ -29,7 +26,6 @@ const [cordinates, user] = await Promise.all([
     where: {
       imageId: id,
       found: "false",
-      leaderBoardId: null
     },
   }),
 
@@ -48,7 +44,7 @@ const [cordinates, user] = await Promise.all([
 
 ])
 
-  await prisma.cordinates.createMany({
+  await prisma.leaderBoardCordinates.createMany({
   data:[
     {cordBotY: cordinates[0].cordBotY, cordLeftX: cordinates[0].cordLeftX,
       cordRightX: cordinates[0].cordRightX, cordTopY: cordinates[0].cordTopY,
@@ -70,7 +66,7 @@ const [cordinates, user] = await Promise.all([
   ]
 })
 
-const userCordinates = await prisma.cordinates.findMany({
+const userCordinates = await prisma.leaderBoardCordinates.findMany({
   where: {
     leaderBoardId: user.id
   }
@@ -83,9 +79,9 @@ const userCordinates = await prisma.cordinates.findMany({
 ///
 
 exports.cordinatesCheck = async (req, res) => {
-  //const id = Number(req.body.id);
 
-  const cords = await prisma.cordinates.findUnique({
+
+  const cords = await prisma.leaderBoardCordinates.findUnique({
     where: {
       id: Number(req.body.id),
       leaderBoardId: Number(req.body.leaderBoardId)
@@ -100,7 +96,7 @@ exports.cordinatesCheck = async (req, res) => {
     req.body.y >= cords.cordTopY &&
     req.body.y <= cords.cordBotY
   ) {
-   await prisma.cordinates.update({
+   await prisma.leaderBoardCordinates.update({
       where: {
         id: Number(req.body.id),
         leaderBoardId: Number(req.body.leaderBoardId)
@@ -113,16 +109,16 @@ exports.cordinatesCheck = async (req, res) => {
     message = "guess";
   } 
 
-  //const num = Number(req.body.num);
+
 
   const [cordinates, guesses] = await Promise.all([
-    prisma.cordinates.findMany({
+    prisma.leaderBoardCordinates.findMany({
       where: {
         imageId: cords.imageId,  
         leaderBoardId: Number(req.body.leaderBoardId)
       },
     }),
-    prisma.cordinates.findMany({
+    prisma.leaderBoardCordinates.findMany({
       where: {
         imageId: cords.imageId,
         found: 'true',
@@ -149,11 +145,11 @@ exports.cordinatesCheck = async (req, res) => {
 
     const date = new Date();
 
-   await prisma.cordinates.deleteMany({
+  /* await prisma.cordinates.deleteMany({
     where:{
       leaderBoardId: Number(req.body.leaderBoardId)
     }
-   })
+   })*/
 
     await prisma.leaderBoard.updateMany({
       where: {

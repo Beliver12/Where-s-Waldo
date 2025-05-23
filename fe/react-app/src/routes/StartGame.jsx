@@ -37,7 +37,7 @@ useEffect(() => {
       });  
   }
 })
-
+debugger
   if (!gameStarted) {
     const selectImage = (e) => {
       debugger;

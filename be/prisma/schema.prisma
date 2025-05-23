@@ -22,6 +22,7 @@ model Images {
  difficulty   String @default("Hard")
   leaderBoard LeaderBoard[]
   cordinates Cordinates[]
+  leaderBoardCordinates LeaderBoardCordinates[]
 }
 
 model LeaderBoard {
@@ -32,7 +33,7 @@ model LeaderBoard {
   finishedGame String
   Images     Images     @relation(fields: [imageId], references: [id])
   imageId    Int
-  cordinates Cordinates[]
+  leaderBoardCordinates LeaderBoardCordinates[]
 }
 
 model Cordinates {
@@ -45,10 +46,20 @@ model Cordinates {
   found       String
   Images     Images     @relation(fields: [imageId], references: [id])
   imageId    Int
- LeaderBoard LeaderBoard? @relation(fields: [leaderBoardId], references: [id])
+}
 
- leaderBoardId Int?
-
+model LeaderBoardCordinates {
+  id         Int    @id @default(autoincrement()) 
+   url        String
+  cordTopY      String
+  cordBotY      String
+  cordLeftX    String
+   cordRightX   String
+  found       String @default("false")
+   LeaderBoard     LeaderBoard    @relation(fields: [leaderBoardId], references: [id])
+  leaderBoardId   Int
+   Images     Images     @relation(fields: [imageId], references: [id])
+  imageId    Int
 }
 
 model Session {

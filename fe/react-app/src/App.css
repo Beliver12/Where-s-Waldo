@@ -157,6 +157,13 @@
 
 h2 {
   background-color: black;
+  grid-column: 3/4;
+}
+
+.loader-parent{
+  grid-column: 1/4;
+  align-self: center;
+  justify-self: flex-start;
 }
 
 nav {
@@ -288,6 +295,32 @@ td {
   text-decoration: none;
   display: block;
 }
+
+@media only screen and (max-width: 500px) {
+  .dropdown.show{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    height: 260px;
+    
+
+    img{
+      height: 70px;
+    }
+  }
+  .modal {
+   
+  
+    img {
+      margin: 10px;
+      width: 10vw;
+  
+      border: 3px solid brown;
+    }
+  }
+}
+
 
 .dropdown-parent{
   position: relative;
