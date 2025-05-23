@@ -69,7 +69,12 @@ const [cordinates, user] = await Promise.all([
 const userCordinates = await prisma.leaderBoardCordinates.findMany({
   where: {
     leaderBoardId: user.id
-  }
+  },
+  orderBy: [
+    {
+      id: "asc",
+    },
+  ],
 })
 
 
@@ -80,7 +85,7 @@ const userCordinates = await prisma.leaderBoardCordinates.findMany({
 
 exports.cordinatesCheck = async (req, res) => {
 
-
+// finds unique cord user tried to guess 
   const cords = await prisma.leaderBoardCordinates.findUnique({
     where: {
       id: Number(req.body.id),
@@ -96,7 +101,8 @@ exports.cordinatesCheck = async (req, res) => {
     req.body.y >= cords.cordTopY &&
     req.body.y <= cords.cordBotY
   ) {
-   await prisma.leaderBoardCordinates.update({
+    // if user guessed update that cord to found: true
+ await prisma.leaderBoardCordinates.update({
       where: {
         id: Number(req.body.id),
         leaderBoardId: Number(req.body.leaderBoardId)
@@ -107,6 +113,7 @@ exports.cordinatesCheck = async (req, res) => {
     });
    
     message = "guess";
+
   } 
 
 
@@ -117,6 +124,11 @@ exports.cordinatesCheck = async (req, res) => {
         imageId: cords.imageId,  
         leaderBoardId: Number(req.body.leaderBoardId)
       },
+      orderBy: [
+        {
+          id: "asc",
+        },
+      ],
     }),
     prisma.leaderBoardCordinates.findMany({
       where: {
@@ -134,9 +146,11 @@ exports.cordinatesCheck = async (req, res) => {
     req.body.y > cords.cordBotY) {
 
    return res.send({ cordinates: cordinates, message: message });
+   } 
+
+   if(guesses.length !== 3) {
+    return res.send({ cordinates: cordinates, message: message });
    }
-
-
 
   if (guesses.length === 3) {
    
@@ -145,13 +159,9 @@ exports.cordinatesCheck = async (req, res) => {
 
     const date = new Date();
 
-  /* await prisma.cordinates.deleteMany({
-    where:{
-      leaderBoardId: Number(req.body.leaderBoardId)
-    }
-   })*/
 
-    await prisma.leaderBoard.updateMany({
+
+    await prisma.leaderBoard.update({
       where: {
         userName: req.body.username,
         imageId: cords.imageId,
