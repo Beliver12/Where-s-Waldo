@@ -35,7 +35,7 @@ const [cordinates, user] = await Promise.all([
       time: (
         date.getHours() * 3600 +
         date.getMinutes() * 60 +
-        date.getSeconds()
+        date.getSeconds() + 1
       ),
       imageId: id,
       finishedGame: "false",
@@ -43,6 +43,8 @@ const [cordinates, user] = await Promise.all([
   }),
 
 ])
+
+
 
   await prisma.leaderBoardCordinates.createMany({
   data:[
@@ -77,6 +79,18 @@ const userCordinates = await prisma.leaderBoardCordinates.findMany({
   ],
 })
 
+ /*await prisma.leaderBoard.update({
+  where: {
+    id: user.id,
+  },
+  data: {
+    time: (
+      date.getHours() * 3600 +
+      date.getMinutes() * 60 +
+      date.getSeconds() 
+    ),
+  },
+}),*/
 
   res.send({ cordinates: userCordinates, num: num, messsage: "success", userId: user.id, time: user.time, leaderBoardId: userCordinates[0].leaderBoardId });
 };
