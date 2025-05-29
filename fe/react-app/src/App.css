@@ -121,7 +121,9 @@
   }
 }
 
-
+.timer{
+  background-color: black;
+}
 
 .homepage {
   display: grid;
