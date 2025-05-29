@@ -35,7 +35,7 @@ const [cordinates, user] = await Promise.all([
       time: (
         date.getHours() * 3600 +
         date.getMinutes() * 60 +
-        date.getSeconds() + 1
+        date.getSeconds() + 2
       ),
       imageId: id,
       finishedGame: "false",
