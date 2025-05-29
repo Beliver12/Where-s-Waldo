@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef, use } from "react";
+import { useEffect, useState, useRef, use, } from "react";
+import { Link } from "react-router";
 import React from "react";
 
 const workerPath = new URL("../timeWorker", import.meta.url);
@@ -37,7 +38,7 @@ useEffect(() => {
       });  
   }
 })
-debugger
+
   if (!gameStarted) {
     const selectImage = (e) => {
       debugger;
@@ -138,11 +139,33 @@ debugger
     };
 
     return (
+      
       <div role="intro-modal" className="intro-modal">
+         <Link to="/">Home</Link>
         <div className="loading">
         <label>Loading</label>
           <div className="loader"></div>
         </div>
+        {seletcionImage === undefined ? (
+          ""
+        ) : (
+          <form className="startForm" onSubmit={startTheGame} method="POST">
+            <label htmlFor="username">Username</label>
+            <p>{error}</p>
+            <input
+              placeholder="username"
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <button className="start" type="submit">
+              start
+            </button>
+          </form>
+        )}
         <div className="homepage">
           {" "}
           {seletcionImage === undefined ? (
@@ -163,8 +186,8 @@ debugger
                   tabIndex="0"
                   alt=""
                   style={{
-                    borderWidth: 4,
-                    borderColor: "green",
+                    borderWidth: 8,
+                    borderColor: "black",
                     borderStyle: "solid",
                   }}
                  
@@ -192,33 +215,15 @@ debugger
                 img.difficulty === "Medium" ? 
                 <h2  style={{ color: 'yellow' }} >{img.difficulty}</h2> :
                 <h2  style={{ color: 'green' }} >{img.difficulty}</h2>
+
               }
-                
                 </div>
+                
               );
             })
           )}
         
-           {seletcionImage === undefined ? (
-          ""
-        ) : (
-          <form className="startForm" onSubmit={startTheGame} method="POST">
-            <label htmlFor="username">Username</label>
-            <p>{error}</p>
-            <input
-              placeholder="username"
-              type="text"
-              id="username"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <button className="start" type="submit">
-              start
-            </button>
-          </form>
-        )}
+         
         </div>
        
       </div>

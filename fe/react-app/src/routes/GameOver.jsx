@@ -29,7 +29,7 @@ export const GameOver = ({ status }) => {
   if (status === "Game Over") {
     return (
       <div role="outro-modal" className="outro-modal">
-      
+      <Link to="/">Home</Link>
        <div className="homepage">
         {seletcionImage === undefined ? (
           <h2 className="loader"></h2>
